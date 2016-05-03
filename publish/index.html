@@ -1,10 +1,116 @@
-<html>
+<html ng-app="ArcExtension">
+
 <head>
+    <title>Arc Extension Bottom-up Parsing Algorithm</title>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+
+    <script src="arcControllers.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css">
+
+    <link rel="stylesheet" type="text/css" href="main.css">
+
 </head>
-<body>
-<h1>
-There will be a page here
-</h1>
+
+<body ng-controller="algorithmCtrl">
+
+    <div id="topContainer" class="container-fluid">
+
+        <h1>Arc Extension Bottom-up Chart Parsing Algorithm</h1>
+
+
+        <dl id="studentData" class="dl-horizontal">
+            <dt>Student Name</dt>
+            <dd>Bishoy Louka</dd>
+            <dt>Student ID</dt>
+            <dd>800112112</dd>
+            <dt>Supervised by</dt>
+            <dd>Prof.Dr. Ahmed Rafea</dd>
+
+        </dl>
+        <hr>
+        <div class="row">
+            <form class="form form-horizontal">
+                <div class="form-group">
+                    <label for="sentence" class="control-label col-md-2">The input sentence
+                    </label>
+                    <div class="col-md-10">
+                        <input type="text" id="sentence" class="form-control " ng-model="parseSentence">
+                    </div>
+                </div>
+            </form>
+
+        </div>
+        <div class="row">
+            <div id="grammar" class="col-md-2">
+                <div class="control-box" class="col-md-2">
+                    <a class="control-box-button" href="#" ng-click="runAll()">
+                        <i class="glyphicon glyphicon-lg glyphicon-fast-forward"></i>
+                        <span>Run To Finish</span>
+                    </a>
+                    <a class="control-box-button" href="#" ng-click="runStep()">
+                        <i class="glyphicon glyphicon-lg glyphicon-step-forward"></i>
+                        <span>Run Single Step</span>
+                    </a>
+                </div>
+                <h4>Grammar rules here</h4>
+                <!-- Grammer rules from the book page 53 (page 72 in the PDF) -->
+                <textarea rows="9" ng-model="rawGrammar"></textarea>
+                <h4>Lexicon here</h4>
+                <!-- Lexicon from the book page 56 (page 75 in the PDF) -->
+                <textarea rows="9" ng-model="rawLexicon">
+                </textarea>
+
+            </div>
+            <div id="algorithmSteps" class="col-md-10">
+                <div class="step" ng-repeat="step in steps">
+                    <ol class="col-md-12" >
+                        <li ng-repeat="alert in step.alerts">{{alert}}</li>
+                    </ol>
+                    <div class="col-md-6 well">
+                        <h4>Chart</h4>
+                    </div>
+                    <div class="col-md-3 well">
+                        <h4>Active Arcs</h4>
+                        <div ng-repeat="arc in step.arcs">
+                            <span>{{arc.premise}}</span> ->
+                            <span><span ng-repeat="csq in arc.consequence">
+                                        <i ng-show="arc.dotIndex>0 && arc.dotIndex==$index" class="glyphicon glyphicon-asterisk"></i>
+                                        {{csq}}
+                                    </span>
+                            <i ng-show="arc.dotIndex>0 && arc.dotIndex==arc.consequence.length" class="glyphicon glyphicon-asterisk"></i>
+
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-3 well">
+                        <h4>Agenda</h4>
+
+                        <div ng-repeat="agendaItem in step.agenda">
+                            <div ng-class="{strike:agendaItem.isUsed}"><strong>{{agendaItem.category}}</strong></div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
 </body>
+
+
+
 
 </html>
