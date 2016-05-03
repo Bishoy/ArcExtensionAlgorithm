@@ -1,0 +1,29 @@
+{
+  "name": "ArcExtension_js",
+  "homepage": "https://github.com/Bishoy/ArcExtensionAlgorithm",
+  "description": "Course 569",
+  "main": "index.html",
+  "moduleType": [],
+  "keywords": [
+    "ArcExtention",
+    "Algorithm",
+    "HTML5",
+    "Javascript"
+  ],
+  "authors": [
+    "Bishoy Louka"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "angularjs#^1.5.4",
+    "bootstrap": "^3.3.6"
+  }
+}

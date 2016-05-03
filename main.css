@@ -1,0 +1,60 @@
+dt {
+	text-align: left;
+}
+@media (min-width: 768px) {
+	.dl-horizontal dt {
+		text-align: left;
+	}
+}
+
+.control-box
+{
+    display: block;
+    width: 100%;
+}
+.control-box,.control-box *
+{
+    font-size: 12px;
+    color: green;
+}
+.control-box-button,.control-box-button:hover
+{
+    display: inline-block;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    text-decoration: none;
+}
+
+.control-box a.control-box-button+a.control-box-button
+{
+    margin-left:1em; 
+}
+
+.control-box-button i
+{
+    padding-top: 0.2em;
+    padding-bottom: auto;
+    text-align: center;
+    color: green;
+    border-radius: 50%;
+    border: 5px solid;
+    height: 2em;
+    width: 2em;
+    font-size: 2em;
+}
+
+
+.control-box-button span
+{   
+    display:block;
+}
+
+.strike {
+    text-decoration: line-through;
+}
+
+
+#sentence {}
+
+
