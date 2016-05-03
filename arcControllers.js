@@ -11,6 +11,8 @@ app.controller('algorithmCtrl', function ($scope) {
 //
 //	       }
     ];
+	
+	
 
     $scope.rawGrammar = "S->NP VP\nNP->ART ADJ N\nNP ->ART N\nNP ->ADJ N\nVP->ADJ N\nVP->AUX VP\nVP->V NP";
     $scope.rawLexicon = "the: ART\nlarge: ADJ\ncan: N,AUX,V\nhold: N,V\nwater: N,V";
