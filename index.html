@@ -2,7 +2,7 @@
 
 <head>
     <title>Arc Extension Bottom-up Parsing Algorithm</title>
-    
+
     <!-- build:js js/app.js -->
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -10,7 +10,7 @@
     <script src="arcControllers.js"></script>
     <!-- endbuild -->
 
-     <!-- build:css css/app.css -->
+    <!-- build:css css/app.css -->
     <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
     <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="main.css">
@@ -19,6 +19,33 @@
 
 <body ng-controller="algorithmCtrl">
 
+    <div id="errorModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content panel-danger">
+                <div class="modal-header panel-heading">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">Errors while parsing the Lexicon and the grammar</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-11">
+                            <p>
+                                Please fix the errors below and try again
+                            </p>
+                            <div class="alert alert-danger" ng-repeat="e in errors">{{e}}</div>
+                        </div>
+                        <div class="col-md-1">
+                            <br>
+                            <i class="glyphicon glyphicon-lg exclamation-sign" style="font-size:4em;color:darkred"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div id="topContainer" class="container-fluid">
 
         <h1>Arc Extension Bottom-up Chart Parsing Algorithm</h1>
@@ -53,11 +80,11 @@
                         <i class="glyphicon glyphicon-lg glyphicon-erase"></i>
                         <span>Reset</span>
                     </a>
-                    <a class="control-box-button" ng-click="runAll()">
+                    <a class="control-box-button" href="#b" ng-click="runAll()">
                         <i class="glyphicon glyphicon-lg glyphicon-fast-forward"></i>
                         <span>Finish</span>
                     </a>
-                    <a class="control-box-button" ng-click="runStep()">
+                    <a class="control-box-button" href="#b" ng-click="runStep()">
                         <i class="glyphicon glyphicon-lg glyphicon-step-forward"></i>
                         <span>Single Step</span>
                     </a>
@@ -74,10 +101,10 @@
             <div id="algorithmSteps" class="col-md-10">
                 <div class="step" ng-repeat="step in steps">
                     <div class="row">
-                    <ol >
-                        <li ng-repeat="alert in step.alerts">{{alert}}</li>
-                    </ol>
-                        </div>
+                        <ol>
+                            <li ng-repeat="alert in step.alerts">{{alert}}</li>
+                        </ol>
+                    </div>
                     <div class="col-md-6 well">
                         <h4><strong>Chart</strong></h4>
                         <table class="SentenceTable">
@@ -159,6 +186,7 @@
                     </div>
 
                 </div>
+                <div id="b"></div>
                 <div ng-show="done===true" class="row">
                     <h2>Q.E.D , No More steps</h2>
                 </div>

@@ -109,22 +109,34 @@ app.controller('algorithmCtrl', ['$scope', 'Arc', 'Agenda', function ($scope, Ar
     $scope.steps = [];
     $scope.rawGrammar = "S->NP VP\nNP->ART ADJ N\nNP ->ART N\nNP ->ADJ N\nVP->AUX VP\nVP->V NP";
     $scope.rawLexicon = "the: ART\nlarge: ADJ\ncan: N,AUX,V\nhold: N,V\nwater: N,V";
-    $scope.parseSentence = "the large can can hold the water";
+    $scope.parseSentence = "The large can can hold the water";
     var initiated = false;
 
-    $scope.reset = function()
-    {
+    $scope.reset = function () {
         $scope.steps = [];
         initiated = false;
         $scope.done = false;
     }
-    
+
+
     
     $scope.runStep = function () {
         if (!initiated) {
-            parseGrammarAndLexicon($scope.rawGrammar, $scope.rawLexicon);
             $scope.tokens = tokenizeTheSentence();
-            initiated = true;
+
+            cleanSpaces();
+            
+            //validates and fills the scope error messages
+            var valid = validateLexiconAndGrammar($scope.parseSentence, $scope.rawGrammar, $scope.rawLexicon);
+
+            if (valid) {
+                parseGrammarAndLexicon($scope.rawGrammar, $scope.rawLexicon);
+
+                initiated = true;
+            } else {
+
+                $('#errorModal').modal('show');
+            }
         }
 
 
@@ -188,7 +200,7 @@ app.controller('algorithmCtrl', ['$scope', 'Arc', 'Agenda', function ($scope, Ar
 
             } else {
                 console.log("Finished,nothing more to process");
-                $scope.done=true;
+                $scope.done = true;
                 return false;
             }
         } else {
@@ -243,7 +255,7 @@ app.controller('algorithmCtrl', ['$scope', 'Arc', 'Agenda', function ($scope, Ar
                 var shouldBeAdded = arc.activate(agendaItem, step);
                 if (shouldBeAdded) {
                     arc.positionFrom = agendaItem.positionFrom;
-                    addArcToStep(step,arc);
+                    addArcToStep(step, arc);
                     activatedArcs.push(arc);
                 }
             });
@@ -265,16 +277,16 @@ app.controller('algorithmCtrl', ['$scope', 'Arc', 'Agenda', function ($scope, Ar
     }
 
     function addArcToStep(step, arc) {
-        
-            if (!step.arcs.find(function (matchArc) {
-                    return angular.equals(arc, matchArc);
-                })) {
-                step.arcs.push(angular.copy(arc));
-            }
-        
+
+        if (!step.arcs.find(function (matchArc) {
+                return angular.equals(arc, matchArc);
+            })) {
+            step.arcs.push(angular.copy(arc));
+        }
+
     }
-    
-    
+
+
     function addArcsToChart(step, arcs) {
         arcs.forEach(function (arc) {
             if (!step.chart.find(function (matchArc) {
@@ -372,6 +384,76 @@ app.controller('algorithmCtrl', ['$scope', 'Arc', 'Agenda', function ($scope, Ar
 
     }
 
+
+    function validateLexiconAndGrammar(parseSentence, grammar, rawLexicon) {
+        var errors = [];
+         $scope.errors = errors;
+        
+        var grammarRegex = /^[A-Z]+\s*->(\s*[A-Z]+\s*)+$/;
+        var lexiconRegex = /^[a-z]+\s*:\s*([A-Z]+\s*(,|$))+$/;
+        
+        var grammarLines = grammar.split('\n');
+        
+        grammarLines.forEach(function(line){
+            if(grammarRegex.test(line))
+                {
+                    // do nothing for now
+                }
+            else
+                {
+                    errors.push('Error in line "'+ line + '"of the grammar, please make sure that constituents are in capital letters followed by -> and the correct constituents separated by space ');
+                }
+        });
+        
+        
+        var lexiconLines= rawLexicon.split('\n');
+
+        var lexiconKeys=[];
+        lexiconLines.forEach(function(line){
+            //check regex , if regex succeeds 
+            if(lexiconRegex.test(line))
+                {
+                    var word = line.split(':')[0]
+                    // to check if tokens are in the keys or not
+                    lexiconKeys.push(word);    
+                }
+            else
+                {
+                    errors.push('Error in line "'+ line + '"of the lexicon, please make sure that the word is in small letters followed by colon and the correct constituents separeated by commas ');
+                }
+        });
+        
+        if( errors.length>0)
+            {
+                return false;
+            }
+        
+        $scope.tokens.forEach(function(token){
+            if(lexiconKeys.indexOf(token)==-1)
+                {
+                    errors.push(token +' is not present in the lexicon, all sentence words must be present in the lexicon');
+                }
+        });
+        
+        
+        
+        
+        if( errors.length>0)
+            {
+                return false;
+            }
+
+        
+       
+        return true;
+    }
+    
+    function cleanSpaces()
+    {
+        $scope.parseSentence=$scope.parseSentence.replace(/[ \t]+/g,' ');
+        $scope.rawLexicon=$scope.rawLexicon.replace(/[ \t]+/g,' ');
+        $scope.rawGrammar=$scope.rawGrammar.replace(/[ \t]+/g,' ');
+    }
 
     $scope.trailingTrs = function (To) {
         return new Array($scope.sentenceLength - To + 1);
