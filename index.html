@@ -105,40 +105,41 @@
                             <li ng-repeat="alert in step.alerts">{{alert}}</li>
                         </ol>
                     </div>
-                    <div class="col-md-6 well">
-                        <h4><strong>Chart</strong></h4>
-                        <table class="SentenceTable">
-                            <tr ng-repeat="arc in step.chart|orderBy: '-positionTo-positionFrom'" ng-show="arc.dotIndex==arc.consequence.length">
-                                <td class="HiddenTd" ng-repeat="l in leadingTrs(arc.positionFrom) track by $index"></td>
-                                <td colspan="{{arc.positionTo-arc.positionFrom}}">{{arc.premise}}</td>
-                                <td class="HiddenTd" ng-repeat="t in trailingTrs(arc.positionTo)  track by $index"></td>
-                            </tr>
-                            <tr>
-                                <td ng-repeat="token in step.processedTokens track by $index">{{token}}</td>
-                                <td class="HiddenTd" ng-repeat="t in trailingTrs(step.processedTokens.length+1) track by $index"></td>
-                            </tr>
-                        </table>
-                        <h5><strong>Completed</strong></h5>
+                    <div>
+                        <div class="col-md-6 well">
+                            <h4><strong>Chart</strong></h4>
+                            <table class="SentenceTable">
+                                <tr ng-repeat="arc in step.chart|orderBy: '-positionTo-positionFrom'" ng-show="arc.dotIndex==arc.consequence.length">
+                                    <td class="HiddenTd" ng-repeat="l in leadingTrs(arc.positionFrom) track by $index"></td>
+                                    <td colspan="{{arc.positionTo-arc.positionFrom}}">{{arc.premise}}</td>
+                                    <td class="HiddenTd" ng-repeat="t in trailingTrs(arc.positionTo)  track by $index"></td>
+                                </tr>
+                                <tr>
+                                    <td ng-repeat="token in step.processedTokens track by $index">{{token}}</td>
+                                    <td class="HiddenTd" ng-repeat="t in trailingTrs(step.processedTokens.length+1) track by $index"></td>
+                                </tr>
+                            </table>
+                            <h5><strong>Completed</strong></h5>
 
-                        <div ng-repeat="arc in step.chart track by $index">
-                            <div ng-show="arc.dotIndex==arc.consequence.length">
-                                <span>{{arc.premise}}</span>
-                                <i class="glyphicon glyphicon-arrow-right"></i>
-                                <span><span ng-repeat="csq in arc.consequence">
+                            <div ng-repeat="arc in step.chart track by $index">
+                                <div ng-show="arc.dotIndex==arc.consequence.length">
+                                    <span>{{arc.premise}}</span>
+                                    <i class="glyphicon glyphicon-arrow-right"></i>
+                                    <span><span ng-repeat="csq in arc.consequence">
                                     
                                         {{csq}}
                                     </span>
-                                </span>
-                                <span>
+                                    </span>
+                                    <span>
                             from
                             {{arc.positionFrom}}
                                 to 
                               {{arc.positionTo}}  
                             </span>
+                                </div>
                             </div>
-                        </div>
 
-                        <h5><strong>History</strong></h5 >
+                            <h5><strong>History</strong></h5 >
 
                         <div ng-repeat="arc in step.chart track by $index" ng-show="arc.dotIndex<=arc.consequence.length">
                             <div ng-show="arc.dotIndex<arc.consequence.length">
@@ -184,7 +185,7 @@
                             <div ng-class="{strike:agendaItem.isUsed}"><strong>{{agendaItem.identifier}}:{{agendaItem.category}} from {{agendaItem.positionFrom}} to {{agendaItem.positionTo}}</strong></div>
                         </div>
                     </div>
-
+                    </div>
                 </div>
                 <div id="b"></div>
                 <div ng-show="done===true" class="row">

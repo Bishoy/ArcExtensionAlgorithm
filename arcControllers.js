@@ -390,7 +390,7 @@ app.controller('algorithmCtrl', ['$scope', 'Arc', 'Agenda', function ($scope, Ar
          $scope.errors = errors;
         
         var grammarRegex = /^[A-Z]+\s*->(\s*[A-Z]+\s*)+$/;
-        var lexiconRegex = /^[a-z]+\s*:\s*([A-Z]+\s*(,|$))+$/;
+        var lexiconRegex = /^[a-z]+\s*:\s*([A-Z]+\s*(,|$))+/;
         
         var grammarLines = grammar.split('\n');
         
@@ -401,7 +401,7 @@ app.controller('algorithmCtrl', ['$scope', 'Arc', 'Agenda', function ($scope, Ar
                 }
             else
                 {
-                    errors.push('Error in line "'+ line + '"of the grammar, please make sure that constituents are in capital letters followed by -> and the correct constituents separated by space ');
+                    errors.push('Error in line "'+ line + '" of the grammar, please make sure that constituents are in capital letters followed by -> and the correct constituents separated by space ');
                 }
         });
         
@@ -419,7 +419,7 @@ app.controller('algorithmCtrl', ['$scope', 'Arc', 'Agenda', function ($scope, Ar
                 }
             else
                 {
-                    errors.push('Error in line "'+ line + '"of the lexicon, please make sure that the word is in small letters followed by colon and the correct constituents separeated by commas ');
+                    errors.push('Error in line "'+ line + '" of the lexicon, please make sure that the word is in small letters followed by colon and the correct constituents separated by commas ');
                 }
         });
         

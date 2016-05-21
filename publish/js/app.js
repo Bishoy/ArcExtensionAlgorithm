@@ -437,18 +437,18 @@ app.controller('algorithmCtrl', ['$scope', 'Arc', 'Agenda', function ($scope, Ar
     $scope.rawGrammar = "S->NP VP\nNP->ART ADJ N\nNP ->ART N\nNP ->ADJ N\nVP->AUX VP\nVP->V NP";
     $scope.rawLexicon = "the: ART\nlarge: ADJ\ncan: N,AUX,V\nhold: N,V\nwater: N,V";
     $scope.parseSentence = "The large can can hold the water";
-    var initiated = false;
+    $scope.initiated = false;
 
     $scope.reset = function () {
         $scope.steps = [];
-        initiated = false;
+        $scope.initiated = false;
         $scope.done = false;
     }
 
 
     
     $scope.runStep = function () {
-        if (!initiated) {
+        if (!$scope.initiated) {
             $scope.tokens = tokenizeTheSentence();
 
             cleanSpaces();
@@ -459,13 +459,13 @@ app.controller('algorithmCtrl', ['$scope', 'Arc', 'Agenda', function ($scope, Ar
             if (valid) {
                 parseGrammarAndLexicon($scope.rawGrammar, $scope.rawLexicon);
 
-                initiated = true;
+                $scope.initiated = true;
             } else {
-
+                $scope.initiated = false;
                 $('#errorModal').modal('show');
+                return;
             }
         }
-
 
         var step = {
             position: 0
@@ -717,7 +717,7 @@ app.controller('algorithmCtrl', ['$scope', 'Arc', 'Agenda', function ($scope, Ar
          $scope.errors = errors;
         
         var grammarRegex = /^[A-Z]+\s*->(\s*[A-Z]+\s*)+$/;
-        var lexiconRegex = /^[a-z]+\s*:\s*([A-Z]+\s*(,|$))+$/;
+        var lexiconRegex = /^[a-z]+\s*:\s*([A-Z]+\s*(,|$))+/;
         
         var grammarLines = grammar.split('\n');
         
@@ -728,7 +728,7 @@ app.controller('algorithmCtrl', ['$scope', 'Arc', 'Agenda', function ($scope, Ar
                 }
             else
                 {
-                    errors.push('Error in line "'+ line + '"of the grammar, please make sure that constituents are in capital letters followed by -> and the correct constituents separated by space ');
+                    errors.push('Error in line "'+ line + '" of the grammar, please make sure that constituents are in capital letters followed by -> and the correct constituents separated by space ');
                 }
         });
         
@@ -746,7 +746,7 @@ app.controller('algorithmCtrl', ['$scope', 'Arc', 'Agenda', function ($scope, Ar
                 }
             else
                 {
-                    errors.push('Error in line "'+ line + '"of the lexicon, please make sure that the word is in small letters followed by colon and the correct constituents separeated by commas ');
+                    errors.push('Error in line "'+ line + '" of the lexicon, please make sure that the word is in small letters followed by colon and the correct constituents separated by commas ');
                 }
         });
         
@@ -770,7 +770,6 @@ app.controller('algorithmCtrl', ['$scope', 'Arc', 'Agenda', function ($scope, Ar
                 return false;
             }
 
-        
        
         return true;
     }

@@ -30,6 +30,10 @@ dt {
     border: 2px solid black;
 }
 
+.well {
+    white-space: nowrap;
+}
+
 .control-box
 {
     display: block;
