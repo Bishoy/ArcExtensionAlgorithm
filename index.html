@@ -2,18 +2,19 @@
 
 <head>
     <title>Arc Extension Bottom-up Parsing Algorithm</title>
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-
-    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
-
-
+    
+    <!-- build:js js/app.js -->
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="bower_components/angular/angular.min.js"></script>
     <script src="arcControllers.js"></script>
+    <!-- endbuild -->
 
-    <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css">
-
+     <!-- build:css css/app.css -->
+    <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="main.css">
-
+    <!-- endbuild -->
 </head>
 
 <body ng-controller="algorithmCtrl">
@@ -48,13 +49,17 @@
         <div class="row">
             <div id="grammar" class="col-md-2">
                 <div class="control-box" class="col-md-2" data-spy="affix" data-offset-top="205">
+                    <a class="control-box-button" ng-click="reset()">
+                        <i class="glyphicon glyphicon-lg glyphicon-erase"></i>
+                        <span>Reset</span>
+                    </a>
                     <a class="control-box-button" ng-click="runAll()">
                         <i class="glyphicon glyphicon-lg glyphicon-fast-forward"></i>
-                        <span>Run To Finish</span>
+                        <span>Finish</span>
                     </a>
                     <a class="control-box-button" ng-click="runStep()">
                         <i class="glyphicon glyphicon-lg glyphicon-step-forward"></i>
-                        <span>Run Single Step</span>
+                        <span>Single Step</span>
                     </a>
                 </div>
                 <h4>Grammar rules here</h4>
@@ -68,13 +73,15 @@
             </div>
             <div id="algorithmSteps" class="col-md-10">
                 <div class="step" ng-repeat="step in steps">
-                    <ol class="col-md-12">
+                    <div class="row">
+                    <ol >
                         <li ng-repeat="alert in step.alerts">{{alert}}</li>
                     </ol>
+                        </div>
                     <div class="col-md-6 well">
                         <h4><strong>Chart</strong></h4>
                         <table class="SentenceTable">
-                            <tr ng-repeat="arc in step.chart track by $index" ng-show="arc.dotIndex==arc.consequence.length">
+                            <tr ng-repeat="arc in step.chart|orderBy: '-positionTo-positionFrom'" ng-show="arc.dotIndex==arc.consequence.length">
                                 <td class="HiddenTd" ng-repeat="l in leadingTrs(arc.positionFrom) track by $index"></td>
                                 <td colspan="{{arc.positionTo-arc.positionFrom}}">{{arc.premise}}</td>
                                 <td class="HiddenTd" ng-repeat="t in trailingTrs(arc.positionTo)  track by $index"></td>
@@ -104,7 +111,7 @@
                             </div>
                         </div>
 
-                        <h5><strong>Incomplete</strong></h5 >
+                        <h5><strong>History</strong></h5 >
 
                         <div ng-repeat="arc in step.chart track by $index" ng-show="arc.dotIndex<=arc.consequence.length">
                             <div ng-show="arc.dotIndex<arc.consequence.length">
@@ -152,7 +159,9 @@
                     </div>
 
                 </div>
-
+                <div ng-show="done===true" class="row">
+                    <h2>Q.E.D , No More steps</h2>
+                </div>
 
 
 

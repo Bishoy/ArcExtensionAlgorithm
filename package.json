@@ -1,0 +1,27 @@
+{
+  "name": "arcextension",
+  "version": "1.0.0",
+  "description": "Arc Extension Algorithm implemented with AngularJs and Bootstrap",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "(https://github.com/Bishoy/ArcExtensionAlgorithm.git)"
+  },
+  "keywords": [
+    "NLP",
+    "Arc",
+    "Extension",
+    "Bottom-up",
+    "parser4"
+  ],
+  "author": "Bishoy Harby (Bishoy.Har.by)",
+  "license": "MIT",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-main-bower-files": "^1.5.1",
+    "gulp-useref": "^3.1.0"
+  }
+}

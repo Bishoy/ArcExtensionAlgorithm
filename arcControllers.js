@@ -112,6 +112,14 @@ app.controller('algorithmCtrl', ['$scope', 'Arc', 'Agenda', function ($scope, Ar
     $scope.parseSentence = "the large can can hold the water";
     var initiated = false;
 
+    $scope.reset = function()
+    {
+        $scope.steps = [];
+        initiated = false;
+        $scope.done = false;
+    }
+    
+    
     $scope.runStep = function () {
         if (!initiated) {
             parseGrammarAndLexicon($scope.rawGrammar, $scope.rawLexicon);
@@ -180,6 +188,7 @@ app.controller('algorithmCtrl', ['$scope', 'Arc', 'Agenda', function ($scope, Ar
 
             } else {
                 console.log("Finished,nothing more to process");
+                $scope.done=true;
                 return false;
             }
         } else {
@@ -234,7 +243,7 @@ app.controller('algorithmCtrl', ['$scope', 'Arc', 'Agenda', function ($scope, Ar
                 var shouldBeAdded = arc.activate(agendaItem, step);
                 if (shouldBeAdded) {
                     arc.positionFrom = agendaItem.positionFrom;
-                    step.arcs.push(arc);
+                    addArcToStep(step,arc);
                     activatedArcs.push(arc);
                 }
             });
@@ -255,6 +264,17 @@ app.controller('algorithmCtrl', ['$scope', 'Arc', 'Agenda', function ($scope, Ar
         return activatedArcs;
     }
 
+    function addArcToStep(step, arc) {
+        
+            if (!step.arcs.find(function (matchArc) {
+                    return angular.equals(arc, matchArc);
+                })) {
+                step.arcs.push(angular.copy(arc));
+            }
+        
+    }
+    
+    
     function addArcsToChart(step, arcs) {
         arcs.forEach(function (arc) {
             if (!step.chart.find(function (matchArc) {

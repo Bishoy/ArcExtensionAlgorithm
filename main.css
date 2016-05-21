@@ -21,8 +21,9 @@ dt {
 .control-box
 {
     display: block;
-    border: 2px solid black;
+    border: 2px solid green;
     border-radius: 5px;
+    padding: 5px;
     white-space: nowrap;
     background: white;
     z-index: 50;
@@ -45,23 +46,24 @@ dt {
     justify-content: center;
     text-align: center;
     text-decoration: none;
+    cursor: pointer;
 }
 
 .control-box a.control-box-button+a.control-box-button
 {
-    margin-left:1em; 
+    margin-left:0.6em; 
 }
 
 .control-box-button i
 {
-    padding-top: 0.25em;
+    padding-top: 0.23em;
     padding-bottom: auto;
     text-align: center;
     color: green;
     border-radius: 50%;
-    border: 5px solid;
-    height: 2em;
-    width: 2em;
+    border: 0.03em solid;
+    height: 1.7em;
+    width: 1.7em;
     font-size: 2em;
 }
 
@@ -75,6 +77,15 @@ dt {
     text-decoration: line-through;
 }
 
+#algorithmSteps .row {
+    display: table;
+}
+
+[class*="col-"] {
+    float: none;
+    display: table-cell;
+    vertical-align: top;
+}
 
 #sentence {}
 
