@@ -717,7 +717,7 @@ app.controller('algorithmCtrl', ['$scope', 'Arc', 'Agenda', function ($scope, Ar
          $scope.errors = errors;
         
         var grammarRegex = /^[A-Z]+\s*->(\s*[A-Z]+\s*)+$/;
-        var lexiconRegex = /^[a-z]+\s*:\s*([A-Z]+\s*(,|$))+$/;
+        var lexiconRegex = /^[a-z]+\s*:\s*([A-Z]+\s*(,|$))+/;
         
         var grammarLines = grammar.split('\n');
         
