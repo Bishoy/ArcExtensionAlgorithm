@@ -7,11 +7,32 @@ dt {
 	}
 }
 
+.SentenceTable td.HiddenTd
+{
+    border:none;
+}
+
+.SentenceTable td
+{
+    padding: 5px;
+    border: 2px solid black;
+}
+
 .control-box
 {
     display: block;
-    width: 100%;
+    border: 2px solid black;
+    border-radius: 5px;
+    white-space: nowrap;
+    background: white;
+    z-index: 50;
 }
+
+.control-box.affix
+{
+    top: 20px;
+}
+
 .control-box,.control-box *
 {
     font-size: 12px;
@@ -33,7 +54,7 @@ dt {
 
 .control-box-button i
 {
-    padding-top: 0.2em;
+    padding-top: 0.25em;
     padding-bottom: auto;
     text-align: center;
     color: green;
