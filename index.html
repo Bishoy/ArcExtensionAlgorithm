@@ -161,7 +161,7 @@
                     </div>
                     <div class="col-md-3 well">
                         <h4>Active Arcs</h4>
-                        <div ng-repeat="arc in step.arcs">
+                        <div ng-repeat="arc in step.arcs" ng-show="arc.dotIndex<arc.consequence.length">
                             <span>{{arc.premise}}</span>
                             <i class="glyphicon glyphicon-arrow-right"></i>
                             <span><span ng-repeat="csq in arc.consequence">
